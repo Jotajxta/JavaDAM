@@ -1,0 +1,138 @@
+package menuAscii;
+
+//cambiar 'ñ' por '?', ' ' por '*', las ',' por '-', los '.' por '+'
+import java.util.Scanner;
+
+public class MenuAscii {
+	static int menu (Scanner e ) {
+		int o = 0;
+		System.out.println("\n\tMENU\n\t====\n");
+		System.out.println("1.- [?] Teclear cadena.");
+		System.out.println("2.- [?] Codificar frase.");
+		System.out.println("3.- [?] Descodificar frase.");
+		System.out.println("4.- [?] Visualizar frase.");
+		System.out.println("5.- [?] Fin.\n");
+		do {
+			System.out.print(" [?] Teclea opcion (1-5)");
+			o = e.nextInt(); 
+ 	}while (o<1 || o>5); 
+		e.nextLine(); //Para vaciar el intro que queda en el buffer de entrada , y que el siguiente numero que pregunte no me de error al teclear intro
+		return o;
+	}
+	static String  teclearFrase(Scanner e) {
+        String frase = null;
+            System.out.print("\n\nTeclea frase");
+            frase=e.nextLine(); //Borras buffer de entrada con el NextLine
+		return frase;
+	}
+	static String codificarFrase(String frase) {
+		int i =0,n=0;
+		char [ ] letras = frase.toCharArray();
+		for (i=0;i<frase.length()-1;i++) {
+			  switch (frase.charAt(i)) {
+              case ' ': 
+                  letras[i] = ((char) 42);
+                  break;
+//              case 'ñ':
+//                  letras[i] = ((char) 63);
+//                  break;
+              case ',':
+                  letras[i] = ((char) 45);
+                  break;
+              case '.':
+                  letras[i] = ((char) 43);
+                  break;
+              case 'Z':
+                  letras[i] = ((char) 65);
+                  break;
+              case 'z':
+                  letras[i] = ((char) 97);
+                  break;
+              case 'Ñ':
+				letras[i] = ((char) 63);
+				break;
+			case 'ñ':
+				letras[i] = ((char) 63);
+				break;
+			default:
+                  n = ((int) letras[i]);
+                  n = n + 1;
+                  letras[i] = (char) n;
+                  break;
+          }
+		}
+		frase = String.valueOf(letras);
+		System.out.print("La frase codificada es: ");
+		return frase;
+	}
+	static String descodificarFrase(String frase, Scanner e) {
+		char [ ] letras=frase.toCharArray() ;
+		int i =0,n=0;
+		for (i=0;i<frase.length()-1;i++) {
+			  switch (frase.charAt(i)) {
+              case '*': 
+                  letras[i] = ((char) ' ');
+                  break;
+//              case 'ñ':
+//                  letras[i] = ((char) 63);
+//                  break;
+              case '-':
+                  letras[i] = ((char) ',');
+                  break;
+              case '+':
+                  letras[i] = ((char) '.');
+                  break;
+//              case 'Z':
+//                  letras[i] = ((char) 65);
+//                  break;
+//              case 'z':
+//                  letras[i] = ((char) 97);
+//                  break;
+              case '?':
+                  letras[i] = ((char) 'ñ');
+                  break;
+              default:
+                  n = ((int) letras[i]);
+                  n = n - 1;
+                  letras[i] = (char) n;
+                  break;
+
+          }
+	}
+		frase = String.valueOf(letras);
+		System.out.print("La frase descodificada es: ");
+		return frase;
+	}
+	static String visualizarFrase (String frase) {
+		System.out.println(" La frase es " +frase);
+		return frase;
+	}
+	static void fin() {
+		System.out.println("\n\n\n\t\tFIN DEL PROGRAMA\n");
+	}
+
+	public static void main (String args[]) {
+		Scanner e = new Scanner (System.in);
+		String frase= null;
+			int o =0;
+			do {
+				o=menu(e);
+				switch (o) {
+				case 1:
+					frase = teclearFrase(e);
+					break;
+				case 2:
+					frase = codificarFrase(frase);
+					break;
+				case 3:
+					frase = descodificarFrase(frase,e);
+					break;
+				case 4:
+					frase = visualizarFrase(frase);
+					break;
+				case 5:
+						fin();
+				}	
+			}while (o!=5);
+			}
+}
