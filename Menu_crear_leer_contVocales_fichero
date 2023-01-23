@@ -1,0 +1,65 @@
+package menu_crear_leer_fichero;
+import java.util.Scanner;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Menu_crear_leer_fichero {
+	 static int menu(Scanner e) {
+			int o = 0;
+			System.out.println("\n\tMENU\n\t====\n");
+			System.out.println("1.- [?] Crear fichero");
+			System.out.println("2.- [?] Leer fichero");
+			System.out.println("3.- [?] Contar vocales");
+			System.out.println("4.- [?] Fin.\n");
+			do {
+				System.out.print(" [?] Teclea opcion (1-5)");
+				o = e.nextInt(); 
+			}while (o<1 || o>4); 
+			e.nextLine(); 
+			return o;
+	}
+	 static void crearFichero () {
+			int car =0;
+			try {
+				FileWriter esc = new FileWriter("C:\\Users\\Alumno\\Documents",true);
+				System.out.print("Teclear texto a grabar: ");
+				car = (char) System.in.read();
+				while (car!='*') {
+					esc.write(car);
+					car = (char) System.in.read();
+				}
+				esc.close();
+			}catch(IOException ioe) {
+				System.out.println(ioe.getMessage());
+			}
+			System.out.println("Fin de proceso de escritura ");
+	 }
+
+	
+	
+	public static void main (String [] args ) {
+		Scanner e = new Scanner (System.in);
+		int opcion =0;
+		do {
+			opcion=menu(e);
+			switch (opcion) {
+			case 1:
+				crearFichero();
+				break;
+			case 2:
+				
+				break;
+			case 3:
+			
+				break;
+			case 4:
+				
+				break;
+			case 5:
+					
+			}	
+		}while (opcion!=4);
+	}
+
+
+}
