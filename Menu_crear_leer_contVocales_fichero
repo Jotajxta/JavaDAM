@@ -1,65 +1,128 @@
 package menu_crear_leer_fichero;
+
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 public class Menu_crear_leer_fichero {
-	 static int menu(Scanner e) {
-			int o = 0;
-			System.out.println("\n\tMENU\n\t====\n");
-			System.out.println("1.- [?] Crear fichero");
-			System.out.println("2.- [?] Leer fichero");
-			System.out.println("3.- [?] Contar vocales");
-			System.out.println("4.- [?] Fin.\n");
-			do {
-				System.out.print(" [?] Teclea opcion (1-5)");
-				o = e.nextInt(); 
-			}while (o<1 || o>4); 
-			e.nextLine(); 
-			return o;
-	}
-	 static void crearFichero () {
-			int car =0;
-			try {
-				FileWriter esc = new FileWriter("C:\\Users\\Alumno\\Documents",true);
-				System.out.print("Teclear texto a grabar: ");
-				car = (char) System.in.read();
-				while (car!='*') {
-					esc.write(car);
-					car = (char) System.in.read();
-				}
-				esc.close();
-			}catch(IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
-			System.out.println("Fin de proceso de escritura ");
-	 }
-
-	
-	
-	public static void main (String [] args ) {
-		Scanner e = new Scanner (System.in);
-		int opcion =0;
+    static int menu (Scanner e ) {
+		int o = 0;
+		System.out.println("\n\tMENU\n\t====\n");
+		System.out.println("1.- [?] Crear Fichero.");
+		System.out.println("2.- [?] Leer Fichero.");
+		System.out.println("3.- [?] Contar Vocales.");
+		System.out.println("4.- [?] Fin.\n");
 		do {
-			opcion=menu(e);
-			switch (opcion) {
-			case 1:
-				crearFichero();
-				break;
-			case 2:
-				
-				break;
-			case 3:
-			
-				break;
-			case 4:
-				
-				break;
-			case 5:
-					
-			}	
-		}while (opcion!=4);
+			System.out.print(" [?] Teclea opcion (1-4)");
+			o = e.nextInt(); 
+ 	}while (o<1 || o>4); 
+		e.nextLine(); //Para vaciar el intro que queda en el buffer de entrada , y que el siguiente numero que pregunte no me de error al teclear intro
+		return o;
 	}
+    static void crearFichero () {
+        int car=0;
+        try{
+            FileWriter esc = new FileWriter("C:\\Users\\DA-1\\Documents\\textoprueba1.txt",false);//Creo el flujo de salida, abre el fichero de salida
+            System.out.print("Teclear texto a grabar");
+            car = (char) System.in.read();
+            while (car!='*'){
+                esc.write(car);
+                car = (char) System.in.read();
+            }
+            esc.close();
+        }catch(IOException ioe){
+            System.out.println(ioe.getMessage());
+        }
+    }
+    static void leerFichero (){
+        String texto =" ";
+        int car;
+        try{
+            FileReader in = new FileReader("C:\\Users\\DA-1\\Documents\\textoprueba1.txt");
+            car = in.read();
+            while (car!=-1){
+                texto+=(char) car;
+                System.out.println((char) car);
+                car=in.read();
+            }
+            System.out.println("Texto caracter a caracter");
+            in.close();
+        }catch(IOException ioe){
+            System.out.println(ioe.getMessage());
+        }
+    }
+    static void fin() {
+		System.out.println("\n\n\n\t\tFIN DEL PROGRAMA\n");
+	}
+    static int contarVocales() {
+        int car =0,nv=0;
+        try{
+            FileReader in = new FileReader("C:\\Users\\DA-1\\Documents\\textoprueba1.txt");
+            car = in.read();
+            while (car!=-1){
+                switch(Character.toLowerCase((char) car)){
+               case 'a':
+					nv++;
+					break;
+				case 'e':
+					nv++;
+					break;
+				case 'i':
+					nv++;
+					break;
+				case 'o':
+					nv++;
+					break;
+				case 'u':
+					nv++;
+					break;
+				case 'á':
+					nv++;
+					break;
+				case 'é':
+					nv++;
+					break;
+				case 'í':
+					nv++;
+					break;
+				case 'ó':
+					nv++;
+					break;
+				case 'ú':
+					nv++;
+					break;
+            }
+            car = in.read();
+        }
+        in.close();
+    }
+        catch(IOException ioe){
+            System.out.println(ioe.getMessage());
+        }
+        return nv;
 
+    }
 
+    public static void main (String args[]) {
+		Scanner e = new Scanner (System.in);
+			int o =0;
+			do {
+				o=menu(e);
+				switch (o) {
+				case 1:
+					crearFichero();
+					break;
+				case 2:
+					leerFichero();
+					break;
+				case 3:
+					System.out.println("En el fichero hay "+contarVocales()+" Vocales");
+					break;
+				case 4:
+					fin();
+					break;
+				}	
+			}while (o!=4);
+			}
 }
