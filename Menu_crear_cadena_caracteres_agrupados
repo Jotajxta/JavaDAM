@@ -1,0 +1,84 @@
+package menu;
+import java.util.Scanner;
+public class Menu {
+	static int menu(Scanner e ) {
+		int o = 0;
+		System.out.println("\n\tMENU\t\n");
+		System.out.println("1.-Teclear cadena.");
+		System.out.println("2,-Crear cadena caracteres agrupados");
+		System.out.println("3.-Visualizar cadena caracteres agrupados");
+		System.out.println("4,-Fin.\n");
+		do {
+			System.out.println("\tTeclee opción (1-4) ");
+			o = e.nextInt();
+		}while(o<1 || o>4 );
+		e.nextLine();
+		//Borrar buffer de entrada porque meto una opcion de tipo numerico y se queda en el nuffer por eso lo borramos
+		return o;
+	}
+
+	/*static void teclearCadena(String c,Scanner e) {
+		System.out.println("\nTeclee la cadena ");
+		c = e.next();
+	}
+	*/
+	static String crearCadena (Scanner e) {
+		String cad = null;
+		do {
+			System.out.println("\nTeclea cadena de 40 a 50 caracteres");
+			cad = e.nextLine();
+		}while(cad.length()<40 || cad.length()>50);
+		return cad;
+	}
+	
+	static String crearCadenaAgrupada(String c) {
+		String ca ="",cadenaL="",cadenaN="",cadenaC="";
+		int ic=0;
+		char caracter=' ';
+		System.out.println("\n\tAgrupando por caracteres.....\n\n");
+		for(ic=0;ic<c.length();ic++) {
+			caracter = c.charAt(ic);
+			if(Character.isLetter(caracter))
+				cadenaL+= caracter;
+				else
+					if(Character.isDigit(caracter))
+						cadenaN += caracter;
+					else 
+						if(caracter!= ' ')
+							cadenaC += caracter;
+		}
+		ca = cadenaL + cadenaN + cadenaC;
+		System.out.println("\n\tCaracteres agrupados.\n\n");
+		return ca;
+	}
+	
+	static String visualizarCadena (String cadenaA) {
+		System.out.println("\n"+ cadenaA);
+		return cadenaA;
+	}
+	static void findePrograma (Scanner e ) {
+		System.out.println("Fin de progama");
+	}
+	
+public static void main(String [] args) {
+	Scanner e = new Scanner (System.in);
+	int o =0;
+	String c =null, cadenaA=null;
+	
+	do {
+	o=menu(e);
+	switch(o) {
+	case 1:
+		c=crearCadena(e);
+		break;
+	case 2:
+		cadenaA = crearCadenaAgrupada(c);
+		break;
+	case 3:
+		visualizarCadena(cadenaA);
+		break;
+	case 4:
+		findePrograma(e);
+		break;
+	}
+	}while(o != 4);
