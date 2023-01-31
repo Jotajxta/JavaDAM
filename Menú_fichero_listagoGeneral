@@ -1,0 +1,195 @@
+package menu_fichero_listado_general;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileReader;
+//import java.io.*;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+public class Menu_fichero_listado_general {
+	static final String ruta = "C:\\Users\\DA-1\\Documents\\";
+	static int menu (Scanner e) {
+		int opcion = 0;
+		System.out.println("\n\tMENU\n\t====\n");
+		System.out.println("1.- [?] Altas");
+		System.out.println("2.- [?] Listado General");
+		System.out.println("3.- [?] Listado importes por encima de la media");
+		System.out.println("4.- [?] Personas con mayor y menor importe");
+		System.out.println("5.- [?] Fin.\n");
+		
+		do {
+			System.out.print(" [?] Teclea opcion (1-5)");
+			opcion = e.nextInt();
+ 	}while (opcion<1 || opcion>5); 
+		e.nextLine(); //Para vaciar el intro que queda en el buffer de entrada , y que el siguiente numero que pregunte no me de error al teclear intro
+		return opcion;
+	}
+	
+	static void altas (Scanner e) {
+		String nombre=null,importe=null;
+		boolean correcto = true;
+		try {
+			BufferedWriter grabar = new BufferedWriter(new FileWriter("C:\\Users\\DA-1\\Documents\\textoprueba3.txt"));	
+			do {
+			System.out.println("Nombre (Fin para finalizar) ");
+			 nombre = e.nextLine();
+			}while(nombre.length()>20);
+			while(!nombre.equalsIgnoreCase("fin") ) {
+				do {
+					correcto = true;
+				System.out.print("Importe?");
+				importe = e.nextLine();
+				try {
+					Double.parseDouble(importe);
+				}catch(NumberFormatException nfe) {
+					correcto = false;
+				}
+				}while(!correcto);
+				grabar.write(nombre);
+				grabar.newLine();
+				grabar.write(importe);
+				grabar.newLine();
+				do {
+				System.out.println("Nombre (Fin para finalizar)");
+				nombre = e.nextLine();
+				}while(nombre.length()>20);
+				//Este do while es porque si me equivoco no hace falta volver a escriibir todo
+				
+		}
+			grabar.close();
+	}catch(IOException ioe) {}
+	}
+	static void listadoGeneral() {
+		String nombre=null,importe=null;
+		double suma=0;
+		try {
+			BufferedReader leer = new BufferedReader( new FileReader( "C:\\Users\\DA-1\\Documents\\textoprueba3.txt"));
+			nombre =leer.readLine();
+			System.out.println("\n\tLISTADO GENERAL\n\t===========\n");
+			while(nombre != null) {
+				importe=leer.readLine();
+				if (nombre.length()>8) {
+					System.out.print(nombre+"\t\t"+importe+"\n");
+				
+				}
+				else {
+				System.out.println(nombre+"\t\t\t"+importe+"\n");
+				}
+				suma += Double.parseDouble(importe);
+				nombre=leer.readLine();
+		}
+			leer.close();
+			
+			}catch(IOException ioe) {}
+		System.out.println("La suma de todos los importes es ====> "+suma);
+	}
+	static void listadoEncimaMedia () {
+		String nombre=null,importe=null;
+		double media =calculaMedia();
+		double totGeneral =0;
+		int contPersonas=0;
+		
+		try {
+			BufferedReader leer = new BufferedReader( new FileReader( "C:\\Users\\DA-1\\Documents\\textoprueba3.txt"));
+			nombre =leer.readLine();
+			
+			while(nombre != null) {
+				importe=leer.readLine();
+				if(Double.parseDouble(importe) > media) 
+					System.out.println(nombre+"\t\t"+importe);
+					totGeneral+=Double.parseDouble(importe);
+					contPersonas++;
+				nombre=leer.readLine();
+				
+		}
+			leer.close();
+			}catch(IOException ioe) {}
+		System.out.println("\nLa media de los importes del listado General es: "+media);
+		System.out.println("El total general es ===> "+totGeneral);
+	
+	
+	}
+	
+	static double calculaMedia() {
+	String nombre=null,importe=null;
+	int contPersonas = 0;
+	double suma=0;
+
+	System.out.println("\n\tLISTADO SUPERIOR MEDIA\n\t");
+	System.out.println("Nombre\t\tImporte\n---------");
+	try {
+		BufferedReader leer = new BufferedReader( new FileReader( "C:\\Users\\DA-1\\Documents\\textoprueba3.txt"));
+		nombre =leer.readLine();
+		while(nombre != null) {
+			importe=leer.readLine();
+			suma += Double.parseDouble(importe);
+			contPersonas++;
+			nombre = leer.readLine();	
+			
+			
+	}
+		leer.close();
+		//System.out.println("La media de los importes es ===> "+media); 
+		}catch(IOException ioe) {}
+	return suma/contPersonas;
+}
+	
+	static void mayorMenorImporte() {
+		String nombre=null,importe=null,nombreMayor="",nombreMenor="";
+		double impMenor=Double.MAX_VALUE,impMayor=0;
+		
+		try {
+			BufferedReader leer = new BufferedReader( new FileReader( "C:\\Users\\DA-1\\Documents\\textoprueba3.txt"));
+			nombre =leer.readLine();
+			System.out.println("\n\tLISTADO GENERAL\n\t===========\n");
+			while(nombre != null) {
+				importe=leer.readLine();
+				if (Double.parseDouble(importe) > impMayor) {
+					nombreMayor = nombre;
+					impMayor = Double.parseDouble(importe);
+				}
+				if (Double.parseDouble(importe) < impMenor) {
+					nombreMenor = nombre;
+					impMenor = Double.parseDouble(importe);
+				}
+				
+				nombre=leer.readLine();
+			}
+			System.out.println("Persona con mayor importe => "+nombreMayor+"\t\t"+impMayor);
+			System.out.println("Persona con menor importe => "+nombreMenor+"\t\t"+impMenor);
+			leer.close();
+			
+			}catch(IOException ioe) {}
+		
+	}
+	static void fin() {
+		System.out.println("FIN DE PROGRAMA");
+	}
+	public static void main (String [] args) {
+		Scanner e = new Scanner (System.in);
+		int opcion = 0;
+			do {
+				opcion=menu(e);
+				switch(opcion) {
+				case 1:
+					altas(e);
+					break;
+				case 2:
+					listadoGeneral();
+					break;
+				case 3:
+					listadoEncimaMedia();
+					break;
+				case 4:
+					mayorMenorImporte();
+					break;
+				case 5:
+					fin();
+					break;
+				}
+				
+			}while (opcion!=5);
+	}
+
+}
