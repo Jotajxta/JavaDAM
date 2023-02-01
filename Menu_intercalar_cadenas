@@ -1,0 +1,79 @@
+package intercalarCadenas;
+import java.util.Scanner;
+public class IntercalarCadenas {
+	static int menu (Scanner e ) {
+		int o = 0;
+		System.out.println("\n\tMENU\n\t====\n");
+		System.out.println("1.- [?] Teclear cadenas ");
+		System.out.println("2.- [?] Intercalar cadenas ");
+		System.out.println("3.- [?] Visualizar cadena ");
+		System.out.println("4.- [?] Fin ");
+		
+		do {
+			System.out.print(" [?] Teclea opcion (1-5)");
+			o = e.nextInt(); 
+ 	}while (o<1 || o>4); 
+		e.nextLine(); //Para vaciar el intro que queda en el buffer de entrada , y que el siguiente numero que pregunte no me de error al teclear intro
+		return o;
+	}
+	
+	static String teclearCadenas (Scanner e) {
+		String cadenas = "";
+		do {
+		System.out.println("\nTeclea la primera cadena ");
+		cadenas = e.nextLine();
+		}while(cadenas.length()>12);
+		return cadenas ;
+	}
+	static String intercalarCadenas (String c1, String c2) {
+		String c="";
+		System.out.println("\nIntercalando cadenas...\n");
+		boolean fc1=false, fc2 = false;
+		int i1 = 0, i2 = c2.length()-1;
+		while(!fc1 || !fc2 ) {
+			if (i1< c1.length() && !fc2)
+				c += c1.charAt(i1++);
+			else
+				fc1 = true;
+			if (i2>=0 && !fc2 )
+				c += c2.charAt(i2--);
+			else fc2 = true;
+		}
+		System.out.println("\nCadenas intercaladas\n ");
+		return c;
+	}
+	static void visualizarCadenaIntercalada (String c ) {
+		System.out.println("\nCadena intercalada=====> "+c);
+	}
+	static void fin () {
+		System.out.println("\nFIN");
+	}
+	
+	
+	public static void main (String [] args) {
+		Scanner e = new Scanner (System.in);
+		String cadena1 =null; String cadena2 = null, cadenaI = null;
+		int o =0;
+		do {
+			o=menu(e);
+			switch (o) {
+			case 1:
+				cadena1 = teclearCadenas(e);
+				cadena2 = teclearCadenas(e);
+				break;
+			case 2:
+				cadenaI=intercalarCadenas(cadena1,cadena2);
+				break;
+			case 3:
+				visualizarCadenaIntercalada(cadenaI);
+				break;
+			case 4:
+				fin();
+				break;		
+			}	
+		}while (o!=4);
+	
+	}
+	
+
+}
