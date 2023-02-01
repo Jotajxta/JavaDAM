@@ -1,0 +1,85 @@
+package invertirComprobarCadena;
+import java.util.Scanner;
+public class InvertirComprobarCadena {
+	// letras numeros otros y total
+	static String teclearFrase (Scanner e ) {
+		String f = "";
+		do {
+			System.out.print("Teclee cadena (máx. 30 caracteres) ");
+			f = e.nextLine();
+		}while (f.length()>30);
+		return f;
+	}
+	static void visualizarCadena (String frase) {
+		System.out.println("Cadena ===========> "+frase);
+	}
+	static String cadenaInvertida (String frase,Scanner e) {
+		String f ="";
+		for (int i= frase.length()-1 ;i>=0;i--) {
+			f+=frase.charAt(i);
+		}
+		return f ;
+	}
+	static void visualizarCadenaInvertida (String fraseIn) {
+		System.out.println("Cadena invertida => "+fraseIn);
+		
+	}
+	static void comprobarCaracteres (String fraseIn,String frase, int c[]) {
+		
+		int i = 0;
+		char c1=' ',c2= ' ';
+		
+			for (i=0;i<frase.length();i++) {
+				c1 = frase.charAt(i);
+				c2 = fraseIn.charAt(i);
+				if (c1==c2) {
+					c[0]++;
+					if (Character.isLetter(c1))
+						c[1]++;
+					else
+						if (Character.isDigit(c1))
+							c[2]++;
+						else
+								c[3]++;
+				}
+				
+			}	
+	}
+	static void visualizarComprobacion (int v[]) {
+		System.out.println("\nCoincidencias\n===================\n");
+		System.out.println("total\t\tLetras\t\tNúmeros\t\tOtros ");
+		for(int i=0;i<4;i++)
+			System.out.print(v[i]+"\t\t");
+	}
+	static char teclearCaracter (Scanner e) {
+		char b=' ';
+		System.out.println("\n\nTeclee un caractera buscar ");
+		return b = e.next().charAt(0);
+		
+	}
+	static boolean comprobarCaracter (String frase,char c ) {
+		boolean existe = false;
+		for(int p=0;p<frase.length();p++)
+			if(c == frase.charAt(p))
+				existe=true;
+		return true;
+	}
+
+	
+	public static void main (String [] args ) {
+		Scanner e = new Scanner (System.in);
+		String frase = null, fraseIn=null;
+		int vc[]= {0,0,0,0};
+		char c =' ';
+		frase = teclearFrase(e);
+		visualizarCadena(frase);
+		fraseIn=cadenaInvertida (frase,e);
+		visualizarCadenaInvertida(fraseIn);
+		comprobarCaracteres (fraseIn,frase,vc);
+		visualizarComprobacion(vc);
+		c=teclearCaracter(e);
+		comprobarCaracter(frase,c);
+		
+	}
+
+}
