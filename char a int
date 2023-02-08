@@ -1,0 +1,18 @@
+package repaso_dudas;
+
+public class ejemplo_examen_2da_evaluacion {
+	public static void main (String [] args) {
+		String numero1 = "6";
+		char numero2 = '4';
+		int numero = 0;
+		String aux ="";
+		//concateno, no lo igualo porque si hago eso le asigno un caracter a una cadena y no se puede
+		//aux+=numero2;
+		//parse trabaja con cadenas
+		//numero = Integer.parseInt(numero1);
+		//lo siguiente es para pasar un char a int 
+		numero = Character.getNumericValue(numero2);
+		System.out.println("\n\nnúmero => "+numero);
+
+	}
+}
